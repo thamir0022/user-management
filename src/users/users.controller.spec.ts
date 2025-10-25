@@ -2,10 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { NotFoundException } from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto';
 
 describe('UsersController', () => {
   let controller: UsersController;
-  let service: UsersService;
 
   const mockUsersService = {
     findAll: jest.fn(),
@@ -22,7 +22,6 @@ describe('UsersController', () => {
     }).compile();
 
     controller = module.get<UsersController>(UsersController);
-    service = module.get<UsersService>(UsersService);
   });
 
   afterEach(() => {
@@ -81,7 +80,11 @@ describe('UsersController', () => {
 
   describe('create', () => {
     it('should create a user', () => {
-      const dto = { name: 'Alice', email: 'alice@mail.com', role: 'user' };
+      const dto: CreateUserDto = {
+        name: 'Alice',
+        email: 'alice@mail.com',
+        role: 'user',
+      };
       const created = { id: 6, ...dto };
       mockUsersService.create.mockReturnValue(created);
 
